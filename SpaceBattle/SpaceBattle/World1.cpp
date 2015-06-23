@@ -47,6 +47,7 @@ bool World1::create_player_bullets()
 	player_bullets.resize(1000);
 	bullet_input = new BulletInput();
 	bullet_graphics = new BulletGraphics();
+	
 	for (unsigned int i = 0; i < player_bullets.size(); i++)
 	{
 		GameObject* new_bullet = new GameObject(bullet_input, bullet_graphics, sprite_textures[0], glm::vec2(0.00f, 0.00f), glm::vec2(0.00f, 0.00f));

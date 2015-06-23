@@ -10,6 +10,7 @@ public:
 	BulletInput();
 	~BulletInput();
 	virtual void update(GameObject& gameobject, IWorld* world);
+
 private:
 	float speed;
 };

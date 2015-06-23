@@ -32,6 +32,8 @@ public:
 	void handle_input(IWorld* world);
 	void update();
 	void draw(sf::RenderWindow& window, float through_next_frame);
+
+	static const int ROT_OFFSET = -90;
 private:
 	IInput* input;
 	IGraphics* graphics;

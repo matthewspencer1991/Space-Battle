@@ -14,5 +14,10 @@ private:
 	float speed;
 	sf::Clock clock;
 	sf::Time start_time;
+	enum BULLET_STATE {SINGLE, DOUBLE, CIRCULAR};
+	BULLET_STATE bullet_state;
+	const int TIME_BETWEEN_SHOT = 500;
+	const float DAMPING = 0.99f;
+	const float DOUBLE_BULLET_OFFSET = 8.00f;
 };
 
