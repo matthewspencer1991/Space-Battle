@@ -11,7 +11,7 @@ PlayerInput::PlayerInput()
 	rot_speed = 5.5f;
 	speed = 10.00f;
 	start_time = clock.getElapsedTime();
-	bullet_state = BULLET_STATE::DOUBLE;
+	bullet_state = BULLET_STATE::CIRCULAR;
 }
 
 

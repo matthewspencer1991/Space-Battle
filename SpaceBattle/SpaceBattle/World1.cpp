@@ -6,13 +6,16 @@
 #include "PlayerGraphics.h"
 #include "PlayerInput.h"
 
-World1::World1()
+World1::World1() 
 {
 	player_input = NULL;
 	player_graphics = NULL;
 	player = NULL;
 	bullet_input = NULL;
 	bullet_graphics = NULL;
+
+	camera.reset(sf::FloatRect(0, 0, 800, 600));
+	camera.setCenter(sf::Vector2f(400, 300));
 }
 
 
@@ -23,7 +26,7 @@ World1::~World1()
 bool World1::create()
 {
 	// Load sprite textures
-	sprite_textures.resize(2);
+	sprite_textures.resize(TEXTURE_COUNT);
 	sf::Texture* bullet_texture = new sf::Texture();
 	bullet_texture->loadFromFile("bullet_red.png");
 	bullet_texture->setSmooth(true);
@@ -35,7 +38,7 @@ bool World1::create()
 
 	player_input = new PlayerInput();
 	player_graphics = new PlayerGraphics();
-	player = new GameObject(player_input, player_graphics, sprite_textures[1], glm::vec2(800 / 2, 600 / 2), glm::vec2(0.00f, 0.00f));
+	player = new GameObject(player_input, player_graphics, sprite_textures[1], glm::vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), glm::vec2(0.00f, 0.00f));
 	create_player_bullets();
 
 	return true;
@@ -44,7 +47,7 @@ bool World1::create()
 bool World1::create_player_bullets()
 {
 	// Set the maximum amount of bullets that can be shown on screen at once
-	player_bullets.resize(1000);
+	player_bullets.resize(MAX_PLAYER_BULLETS);
 	bullet_input = new BulletInput();
 	bullet_graphics = new BulletGraphics();
 	
@@ -111,6 +114,8 @@ void World1::input()
 
 void World1::update()
 {
+	// update camera
+	camera.setCenter(sf::Vector2f(player->get_position().x, player->get_position().y));
 	player->update();
 	for (int i = 0; i < player_bullets.size(); i++)
 	{
@@ -120,11 +125,22 @@ void World1::update()
 
 void World1::draw(sf::RenderWindow& window, float through_next_frame)
 {
+	// Draw game stuff, that depends on view
+	window.setView(camera);
 	player->draw(window, through_next_frame);
+	// camera debug -- remove
+	sf::RectangleShape rect;
+	rect.setSize(sf::Vector2f(50, 50));
+	rect.setFillColor(sf::Color::Green);
+	rect.setPosition(sf::Vector2f(0, 0));
+	window.draw(rect);
+	// camera debug -- remove
 	for (int i = 0; i < player_bullets.size(); i++)
 	{
 		player_bullets[i]->draw(window, through_next_frame);
 	}
+	// Draw UI elements that don't depend on the vew
+	window.setView(window.getDefaultView());
 }
 
 bool World1::cleanup()

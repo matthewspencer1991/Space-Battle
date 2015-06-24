@@ -7,6 +7,7 @@ class IGraphics;
 
 #include "IWorld.h"
 #include <vector>
+#include "Camera.h"
 
 namespace sf
 {
@@ -41,5 +42,10 @@ private:
 	std::vector<IGraphics*> bullet_graphic_components;
 	std::vector<GameObject*> player_bullets;
 	std::vector<sf::Texture*> sprite_textures;
+	sf::View camera;
+	const int SCREEN_WIDTH = 800;
+	const int SCREEN_HEIGHT = 600;
+	const int TEXTURE_COUNT = 2;
+	const int MAX_PLAYER_BULLETS = 500;
 };
 

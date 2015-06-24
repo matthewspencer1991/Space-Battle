@@ -3,7 +3,7 @@
 
 BulletInput::BulletInput() 
 {
-	speed = 10.001f;
+	speed = 15.50f;
 }
 
 BulletInput::~BulletInput()

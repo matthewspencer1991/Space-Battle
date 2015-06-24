@@ -52,6 +52,7 @@ int main()
 		// Draw
 		window.clear(sf::Color(25, 25, 25, 255));
 		world->draw(window, lag / MS_PER_UPDATE);
+		//world->draw(window, 1);
 		window.display();
 	}
 	world->cleanup();
