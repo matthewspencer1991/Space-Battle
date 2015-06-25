@@ -6,6 +6,7 @@
 #include "PlayerGraphics.h"
 #include "PlayerInput.h"
 #include "Helper.h"
+#include "PlayerAnimator.h"
 
 namespace helper = MATT_SPENCER_HELPER_NAMESPACE;
 
@@ -32,17 +33,20 @@ bool World1::create()
 	// Load sprite textures
 	sprite_textures.resize(TEXTURE_COUNT);
 	sf::Texture* bullet_texture = new sf::Texture();
-	bullet_texture->loadFromFile("bullet_red.png");
+	bullet_texture->loadFromFile("Sprites\\bullet32x32.png");
 	bullet_texture->setSmooth(true);
 	sprite_textures[0] = bullet_texture;
 	sf::Texture* player_texture = new sf::Texture();
-	player_texture->loadFromFile("small_ships.png");
+	player_texture->loadFromFile("Sprites\\small_ship_blue_spritesheet64x64.png");
 	player_texture->setSmooth(true);
 	sprite_textures[1] = player_texture;
 
 	player_input = new PlayerInput();
 	player_graphics = new PlayerGraphics();
-	player = new GameObject(player_input, player_graphics, sprite_textures[1], glm::vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), glm::vec2(0.00f, 0.00f));
+	player_animator = new PlayerAnimator();
+	const int PLAYER_WIDTH = 64;
+	const int PLAYER_HEIGHT = 64;
+	player = new GameObject(player_input, player_graphics, player_animator, sprite_textures[1], glm::vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
 	create_player_bullets();
 
 	return true;
@@ -57,7 +61,9 @@ bool World1::create_player_bullets()
 	
 	for (unsigned int i = 0; i < player_bullets.size(); i++)
 	{
-		GameObject* new_bullet = new GameObject(bullet_input, bullet_graphics, sprite_textures[0], glm::vec2(0.00f, 0.00f), glm::vec2(0.00f, 0.00f));
+		const int BULLET_WIDTH = 32;
+		const int BULLET_HEIGHT = 32;
+		GameObject* new_bullet = new GameObject(bullet_input, bullet_graphics, NULL, sprite_textures[0], glm::vec2(0.00f, 0.00f), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, BULLET_WIDTH, BULLET_HEIGHT));
 		player_bullets[i] = new_bullet;
 		// make bullets initially dead
 		player_bullets[i]->set_dead(true);
@@ -154,6 +160,7 @@ void World1::draw(sf::RenderWindow& window, float through_next_frame)
 bool World1::cleanup()
 {
 	delete player;
+	delete player_animator;
 	delete player_graphics;
 	delete player_input;
 	destroy_player_bullets();

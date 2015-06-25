@@ -3,6 +3,7 @@
 class GameObject;
 class IInput;
 class IGraphics;
+class IAnimator;
 
 
 #include "IWorld.h"
@@ -35,6 +36,7 @@ public:
 private:
 	IInput* player_input;
 	IGraphics* player_graphics;
+	IAnimator* player_animator;
 	GameObject* player;
 	IInput* bullet_input;
 	IGraphics* bullet_graphics;

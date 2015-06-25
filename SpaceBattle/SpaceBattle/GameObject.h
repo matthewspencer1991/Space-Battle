@@ -3,6 +3,7 @@
 class IInput;
 class IGraphics;
 class IWorld;
+class IAnimator;
 
 #include <SFML\Graphics.hpp>
 #include <glm\vec2.hpp>
@@ -10,7 +11,7 @@ class IWorld;
 class GameObject
 {
 public:
-	GameObject(IInput* _input, IGraphics* _graphics, sf::Texture* sprite_texture, const glm::vec2& _position, const glm::vec2& _velocity);
+	GameObject(IInput* _input, IGraphics* _graphics, IAnimator* _animator, sf::Texture* sprite_texture, const glm::vec2& _position, const glm::vec2& _velocity, const sf::IntRect& _source_rect);
 	~GameObject();
 	bool get_dead() const;
 	void set_dead(const bool new_dead_state);
@@ -23,6 +24,8 @@ public:
 	void set_velocity(const glm::vec2& new_velocity);
 	glm::vec2 get_direction() const;
 	void set_direction(const glm::vec2& new_direction);
+	sf::IntRect get_source_rect() const;
+	void set_source_rect(const sf::IntRect& new_source_rect);
 	float get_rot() const;
 	void set_rot(const float new_rot);
 	float get_prev_rot() const;
@@ -37,12 +40,14 @@ public:
 private:
 	IInput* input;
 	IGraphics* graphics;
+	IAnimator* animator;
 	sf::Texture* texture;
 	sf::Sprite sprite;
 	glm::vec2 prev_position;
 	glm::vec2 position;
 	glm::vec2 velocity;
 	glm::vec2 direction;
+	sf::IntRect source_rect;
 	float rotation;
 	float prev_rotation;
 	float rotation_vel;

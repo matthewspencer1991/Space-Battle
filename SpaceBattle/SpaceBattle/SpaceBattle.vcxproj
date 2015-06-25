@@ -90,6 +90,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Helper.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlayerAnimator.cpp" />
     <ClCompile Include="PlayerGraphics.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
     <ClCompile Include="World1.cpp" />
@@ -100,9 +101,11 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Helper.h" />
+    <ClInclude Include="IAnimator.h" />
     <ClInclude Include="IGraphics.h" />
     <ClInclude Include="IInput.h" />
     <ClInclude Include="IWorld.h" />
+    <ClInclude Include="PlayerAnimator.h" />
     <ClInclude Include="PlayerGraphics.h" />
     <ClInclude Include="PlayerInput.h" />
     <ClInclude Include="World1.h" />

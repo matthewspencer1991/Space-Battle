@@ -22,6 +22,18 @@ PlayerInput::~PlayerInput()
 void PlayerInput::update(GameObject& gameobject, IWorld* world)
 {
 	//std::cout << "X : " << gameobject.get_position().x << "Y: " << gameobject.get_position().y << std::endl;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num1))
+	{
+		bullet_state = BULLET_STATE::SINGLE;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num2))
+	{
+		bullet_state = BULLET_STATE::DOUBLE;
+	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Num3))
+	{
+		bullet_state = BULLET_STATE::CIRCULAR;
+	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		gameobject.set_rot_vel(-rot_speed);

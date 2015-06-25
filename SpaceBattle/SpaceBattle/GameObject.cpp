@@ -1,15 +1,17 @@
 #include "GameObject.h"
 #include "IInput.h"
 #include "IGraphics.h"
+#include "IAnimator.h"
 
-GameObject::GameObject(IInput* _input, IGraphics* _graphics, sf::Texture* sprite_texture, const glm::vec2& _position, const glm::vec2& _velocity)
-	: prev_position(0.00f, 0.00f), position(_position.x, _position.y), velocity(_velocity.x, _velocity.y), direction(0.00f, 0.00f)
+GameObject::GameObject(IInput* _input, IGraphics* _graphics, IAnimator* _animator, sf::Texture* sprite_texture, const glm::vec2& _position, const glm::vec2& _velocity, const sf::IntRect& _source_rect)
+	: prev_position(0.00f, 0.00f), position(_position.x, _position.y), velocity(_velocity.x, _velocity.y), direction(0.00f, 0.00f), source_rect(_source_rect)
 {
 	input = _input;
 	graphics = _graphics;
+	animator = _animator;
 	texture = sprite_texture;
 	sprite.setTexture(*texture);
-	sprite.setOrigin(texture->getSize().x / 2, texture->getSize().y / 2);
+	sprite.setOrigin(source_rect.width / 2, _source_rect.height / 2);
 	rotation = 0.00f;
 	rotation_vel = 0.00f;
 	dead = false;
@@ -74,6 +76,16 @@ void GameObject::set_direction(const glm::vec2& new_direction)
 	direction = new_direction;
 }
 
+sf::IntRect GameObject::get_source_rect() const
+{
+	return source_rect;
+}
+
+void GameObject::set_source_rect(const sf::IntRect& new_source_rect)
+{
+	source_rect = new_source_rect;
+}
+
 float GameObject::get_rot() const
 {
 	return rotation;
@@ -114,6 +126,15 @@ void GameObject::handle_input(IWorld* world)
 
 void GameObject::update()
 {
+	// update animation
+	if (animator != NULL && !dead)
+	{
+		animator->update(*this);
+	}
+
+	// update source rect
+	sprite.setTextureRect(source_rect);
+
 	// update position and rotation
 	if (!dead)
 	{
