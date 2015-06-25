@@ -5,6 +5,9 @@
 #include "BulletInput.h"
 #include "PlayerGraphics.h"
 #include "PlayerInput.h"
+#include "Helper.h"
+
+namespace helper = MATT_SPENCER_HELPER_NAMESPACE;
 
 World1::World1() 
 {
@@ -16,6 +19,7 @@ World1::World1()
 
 	camera.reset(sf::FloatRect(0, 0, 800, 600));
 	camera.setCenter(sf::Vector2f(400, 300));
+	camera_prev_centre = glm::vec2(camera.getCenter().x, camera.getCenter().y);
 }
 
 
@@ -114,18 +118,22 @@ void World1::input()
 
 void World1::update()
 {
-	// update camera
-	camera.setCenter(sf::Vector2f(player->get_position().x, player->get_position().y));
 	player->update();
 	for (int i = 0; i < player_bullets.size(); i++)
 	{
 		player_bullets[i]->update();
 	}
+
+	// set camera to new position
+	//camera.setCenter(sf::Vector2f(player->get_position().x, player->get_position().y));
 }
 
 void World1::draw(sf::RenderWindow& window, float through_next_frame)
 {
 	// Draw game stuff, that depends on view
+	// set camera centre to interpolated position
+	glm::vec2 lerped_cam = helper::lerp(player->get_prev_position(), player->get_position(), through_next_frame);
+	camera.setCenter(sf::Vector2f(lerped_cam.x, lerped_cam.y));
 	window.setView(camera);
 	player->draw(window, through_next_frame);
 	// camera debug -- remove

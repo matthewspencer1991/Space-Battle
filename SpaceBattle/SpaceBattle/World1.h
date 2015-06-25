@@ -47,5 +47,6 @@ private:
 	const int SCREEN_HEIGHT = 600;
 	const int TEXTURE_COUNT = 2;
 	const int MAX_PLAYER_BULLETS = 500;
+	glm::vec2 camera_prev_centre;
 };
 
