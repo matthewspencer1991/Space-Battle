@@ -7,6 +7,7 @@ int main()
 	const int WINDOW_WIDTH = 800;
 	const int WINDOW_HEIGHT = 600;
 	const float MS_PER_UPDATE = 14.00f;
+	bool paused = false;
 	//const double MS_PER_UPDATE = 8.33333333333;
 	//const double MS_PER_UPDATE = 33.3333333333;
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Battle");
@@ -34,26 +35,42 @@ int main()
 		sf::Event event;
 		while (window.pollEvent(event))
 		{
-			if (event.type == sf::Event::Closed)
+			switch (event.type)
+			{
+			case sf::Event::Closed:
 				window.close();
-			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-				window.close();
+					break;
+			case sf::Event::LostFocus:
+				paused = true;
+				break;
+			case sf::Event::GainedFocus:
+				paused = false;
+				break;
+			case sf::Event::KeyReleased:
+				if (event.key.code == sf::Keyboard::Escape)
+				{
+					window.close();
+				}
+				break;
+			}
 		}
 
-		// Input
-		world->input();
-		// Update
-		while (lag >= MS_PER_UPDATE)
+		if (!paused)
 		{
-			world->update();
-			lag -= MS_PER_UPDATE;
-		}
+			// Input
+			world->input();
+			// Update
+			while (lag >= MS_PER_UPDATE)
+			{
+				world->update();
+				lag -= MS_PER_UPDATE;
+			}
 
-		// Draw
-		window.clear(sf::Color(25, 25, 25, 255));
-		world->draw(window, lag / MS_PER_UPDATE);
-		//world->draw(window, 1);
-		window.display();
+			// Draw
+			window.clear(sf::Color(25, 25, 25, 255));
+			world->draw(window, lag / MS_PER_UPDATE);
+			window.display();
+		}
 	}
 	world->cleanup();
 	delete world;

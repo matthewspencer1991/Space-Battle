@@ -38,8 +38,14 @@ private:
 	IGraphics* player_graphics;
 	IAnimator* player_animator;
 	GameObject* player;
+
 	IInput* bullet_input;
 	IGraphics* bullet_graphics;
+	IInput* enemy_pod_AI;
+	IGraphics* enemy_pod_graphics;
+	IAnimator* enemy_pod_animator;
+	GameObject* enemy_pod;
+
 	std::vector<IInput*> bullet_inputs_components;
 	std::vector<IGraphics*> bullet_graphic_components;
 	std::vector<GameObject*> player_bullets;
@@ -47,7 +53,7 @@ private:
 	sf::View camera;
 	const int SCREEN_WIDTH = 800;
 	const int SCREEN_HEIGHT = 600;
-	const int TEXTURE_COUNT = 2;
+	const int TEXTURE_COUNT = 3;
 	const int MAX_PLAYER_BULLETS = 500;
 	glm::vec2 camera_prev_centre;
 };
