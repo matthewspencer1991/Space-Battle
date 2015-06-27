@@ -25,9 +25,8 @@ public:
 	virtual bool create();
 	bool create_player_bullets();
 	void destroy_player_bullets();
-	void destroy_bullet_graphics();
-	void destroy_bullet_inputs();
 	void destroy_textures();
+	GameObject* get_player() const;
 	virtual GameObject* request_player_bullet() const;
 	virtual void input();
 	virtual void update();

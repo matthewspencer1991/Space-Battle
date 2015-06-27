@@ -111,22 +111,17 @@ void World1::destroy_player_bullets()
 	}
 }
 
-void World1::destroy_bullet_graphics()
-{
-
-}
-
-void World1::destroy_bullet_inputs()
-{
-
-}
-
 void World1::destroy_textures()
 {
 	for (unsigned int i = 0; i < sprite_textures.size(); i++)
 	{
 		delete sprite_textures[i];
 	}
+}
+
+GameObject* World1::get_player() const
+{
+	return player;
 }
 
 void World1::input()
@@ -158,12 +153,15 @@ void World1::draw(sf::RenderWindow& window, float through_next_frame)
 	glm::vec2 lerped_cam = helper::lerp(player->get_prev_position(), player->get_position(), through_next_frame);
 	camera.setCenter(sf::Vector2f(lerped_cam.x, lerped_cam.y));
 	window.setView(camera);
-	player->draw(window, through_next_frame);
+
+	enemy_pod->draw(window, through_next_frame);
+	// Draw player last in world
 	for (int i = 0; i < player_bullets.size(); i++)
 	{
 		player_bullets[i]->draw(window, through_next_frame);
 	}
-	enemy_pod->draw(window, through_next_frame);
+	player->draw(window, through_next_frame);
+
 	// Draw UI elements that don't depend on the vew
 	window.setView(window.getDefaultView());
 }
