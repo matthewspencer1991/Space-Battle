@@ -63,7 +63,7 @@ bool World1::create()
 	enemy_pod_animator = new EnemyPodAnimator();
 	const int ENEMY_POD_WIDTH = 64;
 	const int ENEMY_POD_HEIGHT = 64;
-	enemy_pod = new GameObject(enemy_pod_AI, enemy_pod_graphics, enemy_pod_animator, sprite_textures[2], glm::vec2(SCREEN_WIDTH / 2, 64.00f), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, ENEMY_POD_WIDTH, ENEMY_POD_HEIGHT));
+	enemy_pod = new GameObject(enemy_pod_AI, enemy_pod_graphics, enemy_pod_animator, sprite_textures[2], glm::vec2(0, 0), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, ENEMY_POD_WIDTH, ENEMY_POD_HEIGHT));
 
 	return true;
 }
