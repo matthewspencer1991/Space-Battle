@@ -21,16 +21,6 @@ GameObject::~GameObject()
 {
 }
 
-bool GameObject::get_dead() const
-{
-	return dead;
-}
-
-void GameObject::set_dead(const bool new_dead_state)
-{
-	dead = new_dead_state;
-}
-
 sf::Sprite& GameObject::get_sprite() 
 {
 	return sprite;
@@ -114,6 +104,26 @@ float GameObject::get_prev_rot() const
 void GameObject::set_rot_vel(const float new_rot_vel)
 {
 	rotation_vel = new_rot_vel;
+}
+
+bool GameObject::get_dead() const
+{
+	return dead;
+}
+
+void GameObject::set_dead(const bool new_dead_state)
+{
+	dead = new_dead_state;
+}
+
+std::string GameObject::get_tag() const
+{
+	return tag;
+}
+
+void GameObject::set_tag(const std::string& new_tag)
+{
+	tag = new_tag;
 }
 
 void GameObject::handle_input(IWorld* world)

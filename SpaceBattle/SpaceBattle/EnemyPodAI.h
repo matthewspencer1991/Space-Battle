@@ -10,7 +10,7 @@ public:
 private:
 	enum STATE { MOVE_TO_PLAYER, CIRCLE_PLAYER };
 	STATE state;
-	const float SPEED = 6;
+	const float SPEED = 3;
 	const float DIST_TO_CIRCLE = 200;
 	const float RADIUS = 100;
 	sf::Clock clock;

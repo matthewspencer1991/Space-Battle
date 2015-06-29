@@ -13,7 +13,7 @@ int main()
 	sf::RenderWindow window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Battle");
 	sf::View view;
 	// Initialise view
-	view.reset(sf::FloatRect(0.00f, 0.00f, 800.00f, 600.00f));
+	view.reset(sf::FloatRect(0.00f, 0.00f, WINDOW_WIDTH, WINDOW_HEIGHT));
 	window.setView(view);
 	IWorld* world = new World1();
 	world->create();

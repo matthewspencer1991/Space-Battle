@@ -56,26 +56,34 @@ bool World1::create()
 	const int PLAYER_WIDTH = 64;
 	const int PLAYER_HEIGHT = 64;
 	player = new GameObject(player_input, player_graphics, player_animator, sprite_textures[1], glm::vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+	player->set_tag("player");
 	create_player_bullets();
+	create_enemy_pods();
 
-	enemy_pod_AI = new EnemyPodAI();
-	enemy_pod_graphics = new EnemyPodGraphics();
-	enemy_pod_animator = new EnemyPodAnimator();
-	const int ENEMY_POD_WIDTH = 64;
-	const int ENEMY_POD_HEIGHT = 64;
-	enemy_pod = new GameObject(enemy_pod_AI, enemy_pod_graphics, enemy_pod_animator, sprite_textures[2], glm::vec2(0, 0), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, ENEMY_POD_WIDTH, ENEMY_POD_HEIGHT));
+	// create intial enemy pods
+	GameObject* pod1 = request_enemy_pod();
+	if (pod1 != NULL)
+	{
+		pod1->set_position(glm::vec2(SCREEN_WIDTH / 2, PLAYER_HEIGHT));
+	}
+
+	GameObject* pod2 = request_enemy_pod();
+	if (pod2 != NULL)
+	{
+		pod2->set_position(glm::vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT - PLAYER_HEIGHT));
+	}
 
 	return true;
 }
 
-bool World1::create_player_bullets()
+bool World1::create_player_bullets() 
 {
 	// Set the maximum amount of bullets that can be shown on screen at once
 	player_bullets.resize(MAX_PLAYER_BULLETS);
 	bullet_input = new BulletInput();
 	bullet_graphics = new BulletGraphics();
 	
-	for (unsigned int i = 0; i < player_bullets.size(); i++)
+	for (int i = 0; i < player_bullets.size(); i++)
 	{
 		const int BULLET_WIDTH = 32;
 		const int BULLET_HEIGHT = 32;
@@ -83,7 +91,31 @@ bool World1::create_player_bullets()
 		player_bullets[i] = new_bullet;
 		// make bullets initially dead
 		player_bullets[i]->set_dead(true);
+		player_bullets[i]->set_tag("player_bullet");
 	}
+	return true;
+}
+
+bool World1::create_enemy_pods() 
+{
+	// set the maximum amount of enemy pods that can be on screen at once
+	enemy_pods.resize(MAX_ENEMY_PODS);
+
+	enemy_pod_AI = new EnemyPodAI();
+	enemy_pod_graphics = new EnemyPodGraphics();
+	enemy_pod_animator = new EnemyPodAnimator();
+	const int ENEMY_POD_WIDTH = 64;
+	const int ENEMY_POD_HEIGHT = 64;
+
+	for (int i = 0; i < MAX_ENEMY_PODS; i++)
+	{
+		GameObject* new_enemy_pod = new GameObject(enemy_pod_AI, enemy_pod_graphics, enemy_pod_animator, sprite_textures[2], glm::vec2(0, 0), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, ENEMY_POD_WIDTH, ENEMY_POD_HEIGHT));
+		enemy_pods[i] = new_enemy_pod;
+		// make enemy pod initially dead
+		enemy_pods[i]->set_dead(true);
+		enemy_pods[i]->set_tag("enemy_pod");
+	}
+	
 	return true;
 }
 
@@ -102,12 +134,37 @@ GameObject* World1::request_player_bullet() const
 	return bullet;
 }
 
+GameObject* World1::request_enemy_pod() const
+{
+	GameObject* enemy_pod = NULL;
+	for (GameObject* pod : enemy_pods)
+	{
+		if (pod->get_dead())
+		{
+			enemy_pod = pod;
+			enemy_pod->set_dead(false);
+			return pod;
+		}
+	}
+	return enemy_pod;
+
+}
+
 void World1::destroy_player_bullets()
 {
 	for (unsigned int i = 0; i < player_bullets.size(); i++)
 	{
 		if (player_bullets[i] != NULL)
 			delete player_bullets[i];
+	}
+}
+
+void World1::destroy_enemy_pods()
+{
+	for (int i = 0; i < enemy_pods.size(); i++)
+	{
+		if (enemy_pods[i] != NULL)
+			delete enemy_pods[i];
 	}
 }
 
@@ -131,7 +188,9 @@ void World1::input()
 	{
 		player_bullets[i]->handle_input(this);
 	}
-	enemy_pod->handle_input(this);
+
+	for (GameObject* enemy_pod : enemy_pods)
+		enemy_pod->handle_input(this);
 }
 
 void World1::update()
@@ -141,7 +200,9 @@ void World1::update()
 	{
 		player_bullets[i]->update();
 	}
-	enemy_pod->update();
+
+	for (GameObject* enemy_pod : enemy_pods)
+		enemy_pod->update();
 	// set camera to new position
 	//camera.setCenter(sf::Vector2f(player->get_position().x, player->get_position().y));
 }
@@ -154,7 +215,9 @@ void World1::draw(sf::RenderWindow& window, float through_next_frame)
 	camera.setCenter(sf::Vector2f(lerped_cam.x, lerped_cam.y));
 	window.setView(camera);
 
-	enemy_pod->draw(window, through_next_frame);
+	for (GameObject* enemy_pod : enemy_pods)
+		enemy_pod->draw(window, through_next_frame);
+
 	// Draw player last in world
 	for (int i = 0; i < player_bullets.size(); i++)
 	{
@@ -173,10 +236,13 @@ bool World1::cleanup()
 	delete player_graphics;
 	delete player_input;
 	destroy_player_bullets();
-	delete enemy_pod;
-	delete enemy_pod_animator;
-	delete enemy_pod_graphics;
-	delete enemy_pod_AI;
+	destroy_enemy_pods();
+	if (enemy_pod_animator != NULL)
+		delete enemy_pod_animator;
+	if (enemy_pod_graphics != NULL)
+		delete enemy_pod_graphics;
+	if (enemy_pod_AI != NULL)
+		delete enemy_pod_AI;
 	delete bullet_graphics;
 	delete bullet_input;
 	destroy_textures();

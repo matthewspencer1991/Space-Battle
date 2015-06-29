@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include <SFML\Graphics\RenderWindow.hpp>
 #include <glm\vec2.hpp>
+#include "glm\geometric.hpp"
 
 namespace helper = MATT_SPENCER_HELPER_NAMESPACE;
 
@@ -26,4 +27,6 @@ void EnemyPodGraphics::draw(sf::RenderWindow& window, float through_next_frame, 
 
 	// draw sprite
 	window.draw(gameobject.get_sprite());
+
+	//helper::draw_vec(window, gameobject.get_position(), gameobject.get_velocity());
 }

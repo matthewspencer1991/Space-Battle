@@ -13,8 +13,6 @@ class GameObject
 public:
 	GameObject(IInput* _input, IGraphics* _graphics, IAnimator* _animator, sf::Texture* sprite_texture, const glm::vec2& _position, const glm::vec2& _velocity, const sf::IntRect& _source_rect);
 	~GameObject();
-	bool get_dead() const;
-	void set_dead(const bool new_dead_state);
 	sf::Sprite& get_sprite();
 	glm::vec2 get_prev_position() const;
 	void set_prev_position(const glm::vec2& new_prev_position);
@@ -32,6 +30,10 @@ public:
 	void set_prev_rot(const float new_prev_rot);
 	float get_rot_vel() const;
 	void set_rot_vel(const float new_rot_vel);
+	bool get_dead() const;
+	void set_dead(const bool new_dead_state);
+	std::string get_tag() const;
+	void set_tag(const std::string& new_tag);
 	void handle_input(IWorld* world);
 	void update();
 	void draw(sf::RenderWindow& window, float through_next_frame);
@@ -52,5 +54,6 @@ private:
 	float prev_rotation;
 	float rotation_vel;
 	bool dead;
+	std::string tag;
 };
 
