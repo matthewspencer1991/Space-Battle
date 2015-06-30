@@ -5,6 +5,7 @@
 #include "BulletInput.h"
 #include "PlayerGraphics.h"
 #include "PlayerInput.h"
+#include "PlayerCollider.h"
 #include "Helper.h"
 #include "PlayerAnimator.h"
 #include "EnemyPodAI.h"
@@ -17,6 +18,8 @@ World1::World1()
 {
 	player_input = NULL;
 	player_graphics = NULL;
+	player_animator = NULL;
+	player_collider = NULL; 
 	player = NULL;
 	bullet_input = NULL;
 	bullet_graphics = NULL;
@@ -53,9 +56,10 @@ bool World1::create()
 	player_input = new PlayerInput();
 	player_graphics = new PlayerGraphics();
 	player_animator = new PlayerAnimator();
+	player_collider = new PlayerCollider();
 	const int PLAYER_WIDTH = 64;
 	const int PLAYER_HEIGHT = 64;
-	player = new GameObject(player_input, player_graphics, player_animator, sprite_textures[1], glm::vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
+	player = new GameObject(player_input, player_graphics, player_animator, player_collider, sprite_textures[1], glm::vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, PLAYER_WIDTH, PLAYER_HEIGHT));
 	player->set_tag("player");
 	create_player_bullets();
 	create_enemy_pods();
@@ -87,7 +91,7 @@ bool World1::create_player_bullets()
 	{
 		const int BULLET_WIDTH = 32;
 		const int BULLET_HEIGHT = 32;
-		GameObject* new_bullet = new GameObject(bullet_input, bullet_graphics, NULL, sprite_textures[0], glm::vec2(0.00f, 0.00f), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, BULLET_WIDTH, BULLET_HEIGHT));
+		GameObject* new_bullet = new GameObject(bullet_input, bullet_graphics, NULL, NULL, sprite_textures[0], glm::vec2(0.00f, 0.00f), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, BULLET_WIDTH, BULLET_HEIGHT));
 		player_bullets[i] = new_bullet;
 		// make bullets initially dead
 		player_bullets[i]->set_dead(true);
@@ -109,7 +113,7 @@ bool World1::create_enemy_pods()
 
 	for (int i = 0; i < MAX_ENEMY_PODS; i++)
 	{
-		GameObject* new_enemy_pod = new GameObject(enemy_pod_AI, enemy_pod_graphics, enemy_pod_animator, sprite_textures[2], glm::vec2(0, 0), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, ENEMY_POD_WIDTH, ENEMY_POD_HEIGHT));
+		GameObject* new_enemy_pod = new GameObject(enemy_pod_AI, enemy_pod_graphics, enemy_pod_animator, NULL, sprite_textures[2], glm::vec2(0, 0), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, ENEMY_POD_WIDTH, ENEMY_POD_HEIGHT));
 		enemy_pods[i] = new_enemy_pod;
 		// make enemy pod initially dead
 		enemy_pods[i]->set_dead(true);
@@ -181,6 +185,11 @@ GameObject* World1::get_player() const
 	return player;
 }
 
+std::vector<GameObject*> World1::get_gameobjects() const
+{
+	return enemy_pods;
+}
+
 void World1::input()
 {
 	player->handle_input(this);
@@ -195,14 +204,14 @@ void World1::input()
 
 void World1::update()
 {
-	player->update();
+	player->update(this);
 	for (int i = 0; i < player_bullets.size(); i++)
 	{
-		player_bullets[i]->update();
+		player_bullets[i]->update(this);
 	}
 
 	for (GameObject* enemy_pod : enemy_pods)
-		enemy_pod->update();
+		enemy_pod->update(this);
 	// set camera to new position
 	//camera.setCenter(sf::Vector2f(player->get_position().x, player->get_position().y));
 }

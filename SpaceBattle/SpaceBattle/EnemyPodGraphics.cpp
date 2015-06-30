@@ -27,6 +27,4 @@ void EnemyPodGraphics::draw(sf::RenderWindow& window, float through_next_frame, 
 
 	// draw sprite
 	window.draw(gameobject.get_sprite());
-
-	//helper::draw_vec(window, gameobject.get_position(), gameobject.get_velocity());
 }

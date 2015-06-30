@@ -4,6 +4,7 @@ class IInput;
 class IGraphics;
 class IWorld;
 class IAnimator;
+class ICollider;
 
 #include <SFML\Graphics.hpp>
 #include <glm\vec2.hpp>
@@ -11,7 +12,7 @@ class IAnimator;
 class GameObject
 {
 public:
-	GameObject(IInput* _input, IGraphics* _graphics, IAnimator* _animator, sf::Texture* sprite_texture, const glm::vec2& _position, const glm::vec2& _velocity, const sf::IntRect& _source_rect);
+	GameObject(IInput* _input, IGraphics* _graphics, IAnimator* _animator, ICollider* _collider, sf::Texture* sprite_texture, const glm::vec2& _position, const glm::vec2& _velocity, const sf::IntRect& _source_rect);
 	~GameObject();
 	sf::Sprite& get_sprite();
 	glm::vec2 get_prev_position() const;
@@ -35,7 +36,7 @@ public:
 	std::string get_tag() const;
 	void set_tag(const std::string& new_tag);
 	void handle_input(IWorld* world);
-	void update();
+	void update(const IWorld* world);
 	void draw(sf::RenderWindow& window, float through_next_frame);
 
 	static const int ROT_OFFSET = -90;
@@ -43,6 +44,7 @@ private:
 	IInput* input;
 	IGraphics* graphics;
 	IAnimator* animator;
+	ICollider* collider;
 	sf::Texture* texture;
 	sf::Sprite sprite;
 	glm::vec2 prev_position;

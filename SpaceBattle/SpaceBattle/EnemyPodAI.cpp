@@ -33,7 +33,7 @@ void EnemyPodAI::update(GameObject& gameobject, IWorld* world)
 		dir = player->get_position() - gameobject.get_position();
 		if (glm::length(dir) <= DIST_TO_CIRCLE)
 		{
-			std::cout << "State: circle player" << "\n";
+			//std::cout << "State: circle player" << "\n";
 			state = STATE::CIRCLE_PLAYER;
 		}
 		else
@@ -52,9 +52,9 @@ void EnemyPodAI::update(GameObject& gameobject, IWorld* world)
 		break;
 	case STATE::CIRCLE_PLAYER:
 		dir = player->get_position() - gameobject.get_position();
-		if (glm::length(dir) > DIST_TO_CIRCLE )
+		if (glm::length(dir) > DIST_TO_CIRCLE + 100 )
 		{
-			std::cout << "State: move to player" << "\n";
+			//std::cout << "State: move to player" << "\n";
 			state = STATE::MOVE_TO_PLAYER;
 		}
 		else
@@ -83,6 +83,7 @@ void EnemyPodAI::update(GameObject& gameobject, IWorld* world)
 
 			gameobject.set_velocity(right * SPEED);
 		}
+
 		break;
 	}
 }

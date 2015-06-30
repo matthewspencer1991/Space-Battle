@@ -2,13 +2,15 @@
 #include "IInput.h"
 #include "IGraphics.h"
 #include "IAnimator.h"
+#include "ICollider.h"
 
-GameObject::GameObject(IInput* _input, IGraphics* _graphics, IAnimator* _animator, sf::Texture* sprite_texture, const glm::vec2& _position, const glm::vec2& _velocity, const sf::IntRect& _source_rect)
-	: prev_position(0.00f, 0.00f), position(_position.x, _position.y), velocity(_velocity.x, _velocity.y), direction(0.00f, 0.00f), source_rect(_source_rect)
+GameObject::GameObject(IInput* _input, IGraphics* _graphics, IAnimator* _animator, ICollider* _collider, sf::Texture* sprite_texture, const glm::vec2& _position, const glm::vec2& _velocity, const sf::IntRect& _source_rect)
+	: prev_position(_position.x, _position.y), position(_position.x, _position.y), velocity(_velocity.x, _velocity.y), direction(0.00f, 0.00f), source_rect(_source_rect)
 {
 	input = _input;
 	graphics = _graphics;
 	animator = _animator;
+	collider = _collider;
 	texture = sprite_texture;
 	sprite.setTexture(*texture);
 	sprite.setOrigin(source_rect.width / 2, _source_rect.height / 2);
@@ -134,7 +136,7 @@ void GameObject::handle_input(IWorld* world)
 	}
 }
 
-void GameObject::update()
+void GameObject::update(const IWorld* world)
 {
 	// update animation
 	if (animator != NULL && !dead)
@@ -154,6 +156,10 @@ void GameObject::update()
 		prev_rotation = rotation;
 		rotation += rotation_vel;
 	}
+
+	// update collision
+	if (collider != NULL && !dead)
+		collider->update(*this, world);
 }
 
 void GameObject::draw(sf::RenderWindow& window, float through_next_frame)

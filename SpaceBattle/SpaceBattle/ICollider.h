@@ -1,12 +1,11 @@
 #pragma once
 
 class GameObject; 
-
-#include <vector>
+class IWorld;
 
 class ICollider
 {
 public:
 	virtual ~ICollider() {}
-	virtual void update(GameObject& gameobject, std::vector<GameObject*> other_gameobjects) = 0;
+	virtual void update(GameObject& gameobject, const IWorld* world) = 0;
 };
