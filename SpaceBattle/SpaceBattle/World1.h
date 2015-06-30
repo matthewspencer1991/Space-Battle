@@ -26,8 +26,7 @@ public:
 	virtual bool create();
 	bool create_player_bullets();
 	bool create_enemy_pods();
-	void destroy_player_bullets();
-	void destroy_enemy_pods();
+	void destroy_gameobjects();
 	void destroy_textures();
 	GameObject* get_player() const;
 	std::vector<GameObject*> get_gameobjects() const;
@@ -52,8 +51,7 @@ private:
 
 	std::vector<IInput*> bullet_inputs_components;
 	std::vector<IGraphics*> bullet_graphic_components;
-	std::vector<GameObject*> player_bullets;
-	std::vector<GameObject*> enemy_pods;
+	std::vector<GameObject*> gameobjects;
 	std::vector<sf::Texture*> sprite_textures;
 	sf::View camera;
 	const int SCREEN_WIDTH = 800;
