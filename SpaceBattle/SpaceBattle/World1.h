@@ -29,9 +29,10 @@ public:
 	void destroy_gameobjects();
 	void destroy_textures();
 	GameObject* get_player() const;
-	std::vector<GameObject*> get_gameobjects() const;
+	const std::vector<GameObject*>& get_gameobjects() const;
 	virtual GameObject* request_player_bullet() const;
 	virtual GameObject* request_enemy_pod() const;
+	virtual GameObject* request_enemy_pod_explosion() const;
 	virtual void input();
 	virtual void update();
 	virtual void draw(sf::RenderWindow& window, float through_next_frame);
@@ -48,6 +49,10 @@ private:
 	IInput* enemy_pod_AI;
 	IGraphics* enemy_pod_graphics;
 	IAnimator* enemy_pod_animator;
+	ICollider* enemy_pod_collider;
+
+	IGraphics* enemy_explosion_graphics;
+	IAnimator* enemy_explosion_animator;
 
 	std::vector<IInput*> bullet_inputs_components;
 	std::vector<IGraphics*> bullet_graphic_components;
@@ -56,7 +61,7 @@ private:
 	sf::View camera;
 	const int SCREEN_WIDTH = 800;
 	const int SCREEN_HEIGHT = 600;
-	const int TEXTURE_COUNT = 3;
+	const int TEXTURE_COUNT = 4;
 	const int MAX_PLAYER_BULLETS = 500;
 	const int MAX_ENEMY_PODS = 10;
 	glm::vec2 camera_prev_centre;

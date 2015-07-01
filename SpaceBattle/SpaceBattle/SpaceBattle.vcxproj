@@ -87,8 +87,11 @@
     <ClCompile Include="BulletGraphics.cpp" />
     <ClCompile Include="BulletInput.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="EnemyExplosionAnimator.cpp" />
+    <ClCompile Include="EnemyExplosionGraphics.cpp" />
     <ClCompile Include="EnemyPodAI.cpp" />
     <ClCompile Include="EnemyPodAnimator.cpp" />
+    <ClCompile Include="EnemyPodCollider.cpp" />
     <ClCompile Include="EnemyPodGraphics.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Helper.cpp" />
@@ -103,8 +106,11 @@
     <ClInclude Include="BulletGraphics.h" />
     <ClInclude Include="BulletInput.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="EnemyExplosionAnimator.h" />
+    <ClInclude Include="EnemyExplosionGraphics.h" />
     <ClInclude Include="EnemyPodAI.h" />
     <ClInclude Include="EnemyPodAnimator.h" />
+    <ClInclude Include="EnemyPodCollider.h" />
     <ClInclude Include="EnemyPodGraphics.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Helper.h" />

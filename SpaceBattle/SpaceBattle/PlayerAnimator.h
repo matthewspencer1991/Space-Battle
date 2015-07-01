@@ -12,6 +12,6 @@ public:
 private:
 	const int FRAMES = 5;
 	const int FRAME_WIDTH = 64;
-	int frame = 1;
+	int frame;
 };
 

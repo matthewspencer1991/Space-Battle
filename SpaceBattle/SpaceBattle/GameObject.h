@@ -57,5 +57,6 @@ private:
 	float rotation_vel;
 	bool dead;
 	std::string tag;
+	int health;
 };
 

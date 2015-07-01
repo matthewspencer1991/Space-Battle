@@ -11,6 +11,9 @@
 #include "EnemyPodAI.h"
 #include "EnemyPodGraphics.h"
 #include "EnemyPodAnimator.h"
+#include "EnemyPodCollider.h"
+#include "EnemyExplosionGraphics.h"
+#include "EnemyExplosionAnimator.h"
 
 namespace helper = MATT_SPENCER_HELPER_NAMESPACE;
 
@@ -26,6 +29,9 @@ World1::World1()
 	enemy_pod_AI = NULL;
 	enemy_pod_graphics = NULL;
 	enemy_pod_animator = NULL;
+	enemy_pod_collider = NULL;
+	enemy_explosion_graphics = NULL;
+	enemy_explosion_animator = NULL;
 
 	camera.reset(sf::FloatRect(0, 0, 800, 600));
 	camera.setCenter(sf::Vector2f(400, 300));
@@ -63,6 +69,24 @@ bool World1::create()
 	player->set_tag("player");
 	create_player_bullets();
 	create_enemy_pods();
+
+	// create enemy explosions
+	enemy_explosion_graphics = new EnemyExplosionGraphics();
+	enemy_explosion_animator = new EnemyExplosionAnimator();
+	sf::Texture* enemy_explosion_texture = new sf::Texture();
+	enemy_explosion_texture->loadFromFile("Sprites\\explosion64x64.png");
+	sprite_textures[3] = enemy_explosion_texture;
+	const int EXPLOSION_WIDTH = 64;
+	const int EXPLOSION_HEIGHT = 64;
+
+	// create the same amount of enemy explosions as pods
+	for (int i = 0; i < MAX_ENEMY_PODS; i++)
+	{
+		GameObject* enemy_pod_explosion = new GameObject(NULL, enemy_explosion_graphics, enemy_explosion_animator, NULL, sprite_textures[3], glm::vec2(0.00f, 0.00f), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, EXPLOSION_WIDTH, EXPLOSION_HEIGHT));
+		enemy_pod_explosion->set_tag("enemy_pod_explosion");
+		enemy_pod_explosion->set_dead(true);
+		gameobjects.push_back(enemy_pod_explosion);
+	}
 
 	// create intial enemy pods
 	GameObject* pod1 = request_enemy_pod();
@@ -106,12 +130,13 @@ bool World1::create_enemy_pods()
 	enemy_pod_AI = new EnemyPodAI();
 	enemy_pod_graphics = new EnemyPodGraphics();
 	enemy_pod_animator = new EnemyPodAnimator();
+	enemy_pod_collider = new EnemyPodCollider();
 	const int ENEMY_POD_WIDTH = 64;
 	const int ENEMY_POD_HEIGHT = 64;
 
 	for (int i = 0; i < MAX_ENEMY_PODS; i++)
 	{
-		GameObject* new_enemy_pod = new GameObject(enemy_pod_AI, enemy_pod_graphics, enemy_pod_animator, NULL, sprite_textures[2], glm::vec2(0, 0), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, ENEMY_POD_WIDTH, ENEMY_POD_HEIGHT));
+		GameObject* new_enemy_pod = new GameObject(enemy_pod_AI, enemy_pod_graphics, enemy_pod_animator, enemy_pod_collider, sprite_textures[2], glm::vec2(0, 0), glm::vec2(0.00f, 0.00f), sf::IntRect(0, 0, ENEMY_POD_WIDTH, ENEMY_POD_HEIGHT));
 		// make enemy pod initially dead
 		new_enemy_pod->set_dead(true);
 		new_enemy_pod->set_tag("enemy_pod");
@@ -152,6 +177,21 @@ GameObject* World1::request_enemy_pod() const
 
 }
 
+GameObject* World1::request_enemy_pod_explosion() const
+{
+	GameObject* enemy_pod_explos = NULL;
+	for (GameObject* gameobject : gameobjects)
+	{
+		if (gameobject->get_tag() == "enemy_pod_explosion" && gameobject->get_dead())
+		{
+			enemy_pod_explos = gameobject;
+			enemy_pod_explos->set_dead(false);
+			return enemy_pod_explos;
+		}
+	}
+	return enemy_pod_explos;
+}
+
 void World1::destroy_gameobjects()
 {
 	for (int i = 0; i < gameobjects.size(); i++)
@@ -174,7 +214,7 @@ GameObject* World1::get_player() const
 	return player;
 }
 
-std::vector<GameObject*> World1::get_gameobjects() const
+const std::vector<GameObject*>& World1::get_gameobjects() const
 {
 	return gameobjects;
 }
@@ -227,6 +267,12 @@ bool World1::cleanup()
 		delete enemy_pod_graphics;
 	if (enemy_pod_AI != NULL)
 		delete enemy_pod_AI;
+	if (enemy_pod_collider != NULL)
+		delete enemy_pod_collider;
+	if (enemy_explosion_graphics != NULL)
+		delete enemy_explosion_graphics;
+	if (enemy_explosion_animator != NULL)
+		delete enemy_explosion_animator;
 	delete bullet_graphics;
 	delete bullet_input;
 	destroy_textures();

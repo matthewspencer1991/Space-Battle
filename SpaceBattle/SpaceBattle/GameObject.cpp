@@ -17,6 +17,7 @@ GameObject::GameObject(IInput* _input, IGraphics* _graphics, IAnimator* _animato
 	rotation = 0.00f;
 	rotation_vel = 0.00f;
 	dead = false;
+	health = 100;
 }
 
 GameObject::~GameObject()

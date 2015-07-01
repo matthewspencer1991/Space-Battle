@@ -3,6 +3,7 @@
 
 PlayerAnimator::PlayerAnimator()
 {
+	frame = 0;
 }
 
 

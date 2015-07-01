@@ -3,7 +3,6 @@
 #include "GameObject.h"
 #include <SFML\Graphics\RenderWindow.hpp>
 #include <glm\vec2.hpp>
-#include "glm\geometric.hpp"
 
 namespace helper = MATT_SPENCER_HELPER_NAMESPACE;
 
