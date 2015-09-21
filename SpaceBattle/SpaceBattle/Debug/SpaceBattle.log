@@ -1,10 +1,35 @@
-﻿Build started 01/07/2015 23:24:27.
-     1>Project "C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\SpaceBattle\SpaceBattle.vcxproj" on node 2 (Build target(s)).
+﻿Build started 02/07/2015 21:08:30.
+     1>Project "C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\SpaceBattle\SpaceBattle.vcxproj" on node 2 (Rebuild target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\SFML-2.3\include" /IC:\glm /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt EnemyExplosionAnimator.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"C:\SFML-2.3\include" /IC:\glm /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt BulletGraphics.cpp BulletInput.cpp Camera.cpp EnemyExplosionAnimator.cpp EnemyExplosionGraphics.cpp EnemyPodAI.cpp EnemyPodAnimator.cpp EnemyPodCollider.cpp EnemyPodGraphics.cpp GameObject.cpp Helper.cpp main.cpp PlayerAnimator.cpp PlayerCollider.cpp PlayerGraphics.cpp PlayerInput.cpp World1.cpp
+         World1.cpp
+     1>c:\users\maspencer91\documents\github\space-battle\spacebattle\spacebattle\world1.cpp(197): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\maspencer91\documents\github\space-battle\spacebattle\spacebattle\world1.cpp(225): warning C4018: '<' : signed/unsigned mismatch
+     1>c:\users\maspencer91\documents\github\space-battle\spacebattle\spacebattle\world1.cpp(234): warning C4018: '<' : signed/unsigned mismatch
+         PlayerInput.cpp
+         PlayerGraphics.cpp
+         PlayerCollider.cpp
+         PlayerAnimator.cpp
+         main.cpp
+     1>c:\users\maspencer91\documents\github\space-battle\spacebattle\spacebattle\main.cpp(16): warning C4244: 'argument' : conversion from 'const int' to 'float', possible loss of data
+     1>c:\users\maspencer91\documents\github\space-battle\spacebattle\spacebattle\main.cpp(71): warning C4244: 'argument' : conversion from 'double' to 'float', possible loss of data
+         Helper.cpp
+     1>c:\users\maspencer91\documents\github\space-battle\spacebattle\spacebattle\helper.cpp(10): warning C4244: 'return' : conversion from 'const double' to 'float', possible loss of data
+     1>c:\users\maspencer91\documents\github\space-battle\spacebattle\spacebattle\helper.cpp(15): warning C4244: 'return' : conversion from 'double' to 'float', possible loss of data
+         GameObject.cpp
+     1>c:\users\maspencer91\documents\github\space-battle\spacebattle\spacebattle\gameobject.cpp(16): warning C4244: 'argument' : conversion from 'int' to 'float', possible loss of data
+         EnemyPodGraphics.cpp
+         EnemyPodCollider.cpp
+         EnemyPodAnimator.cpp
+         EnemyPodAI.cpp
+         EnemyExplosionGraphics.cpp
          EnemyExplosionAnimator.cpp
+         Camera.cpp
+         BulletInput.cpp
+         BulletGraphics.cpp
+         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\Debug\SpaceBattle.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML-2.3\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\Debug\SpaceBattle.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\Debug\SpaceBattle.lib" /MACHINE:X86 Debug\BulletGraphics.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\Debug\SpaceBattle.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\SFML-2.3\lib" "sfml-graphics-d.lib" "sfml-window-d.lib" "sfml-system-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\Debug\SpaceBattle.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\Debug\SpaceBattle.lib" /MACHINE:X86 /PROFILE Debug\BulletGraphics.obj
          Debug\BulletInput.obj
          Debug\Camera.obj
          Debug\EnemyExplosionAnimator.obj
@@ -21,9 +46,11 @@
          Debug\PlayerGraphics.obj
          Debug\PlayerInput.obj
          Debug\World1.obj
+     1>LINK : warning LNK4075: ignoring '/INCREMENTAL' due to '/PROFILE' specification
+     1>BulletGraphics.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/OPT:LBR' specification
          SpaceBattle.vcxproj -> C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\Debug\SpaceBattle.exe
-     1>Done Building Project "C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\SpaceBattle\SpaceBattle.vcxproj" (Build target(s)).
+     1>Done Building Project "C:\Users\maspencer91\Documents\GitHub\Space-Battle\SpaceBattle\SpaceBattle\SpaceBattle.vcxproj" (Rebuild target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:02.36
+Time Elapsed 00:00:13.90

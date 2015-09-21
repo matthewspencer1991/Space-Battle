@@ -14,6 +14,7 @@
 #include "EnemyPodCollider.h"
 #include "EnemyExplosionGraphics.h"
 #include "EnemyExplosionAnimator.h"
+#include <cstdlib>
 
 namespace helper = MATT_SPENCER_HELPER_NAMESPACE;
 
@@ -89,16 +90,15 @@ bool World1::create()
 	}
 
 	// create intial enemy pods
-	GameObject* pod1 = request_enemy_pod();
-	if (pod1 != NULL)
+	for (int i = 0; i < MAX_ENEMY_PODS; i++)
 	{
-		pod1->set_position(glm::vec2(SCREEN_WIDTH / 2, PLAYER_HEIGHT));
-	}
-
-	GameObject* pod2 = request_enemy_pod();
-	if (pod2 != NULL)
-	{
-		pod2->set_position(glm::vec2(SCREEN_WIDTH / 2, SCREEN_HEIGHT - PLAYER_HEIGHT));
+		GameObject* new_pod = request_enemy_pod();
+		if (new_pod != NULL)
+		{
+			int rand_x = rand() % SCREEN_WIDTH + 1;
+			int rand_y = rand() % SCREEN_HEIGHT + 1;
+			new_pod->set_position(glm::vec2(rand_x, rand_y));
+		}
 	}
 
 	return true;

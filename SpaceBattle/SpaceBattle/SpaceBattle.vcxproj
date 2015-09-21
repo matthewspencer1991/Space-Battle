@@ -60,6 +60,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>C:\SFML-2.3\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-d.lib;sfml-window-d.lib;sfml-system-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <Profile>true</Profile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -100,6 +101,7 @@
     <ClCompile Include="PlayerCollider.cpp" />
     <ClCompile Include="PlayerGraphics.cpp" />
     <ClCompile Include="PlayerInput.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="World1.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +125,7 @@
     <ClInclude Include="PlayerCollider.h" />
     <ClInclude Include="PlayerGraphics.h" />
     <ClInclude Include="PlayerInput.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="World1.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

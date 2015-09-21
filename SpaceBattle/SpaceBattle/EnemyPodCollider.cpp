@@ -21,7 +21,6 @@ void EnemyPodCollider::update(GameObject& gameobject, const IWorld* world)
 		{
 			// Handle collision
 			gameobject.set_dead(true);
-			std::cout << "Collision enemy pod!" << "\n";
 			// Spawn explosion
 			GameObject* enemy_pod_explos = world->request_enemy_pod_explosion();
 			if (enemy_pod_explos != NULL)

@@ -63,7 +63,7 @@ private:
 	const int SCREEN_HEIGHT = 600;
 	const int TEXTURE_COUNT = 4;
 	const int MAX_PLAYER_BULLETS = 500;
-	const int MAX_ENEMY_PODS = 10;
+	const int MAX_ENEMY_PODS = 4;
 	glm::vec2 camera_prev_centre;
 };
 

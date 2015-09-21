@@ -20,7 +20,6 @@ void PlayerCollider::update(GameObject& gameobject, const IWorld* world)
 		if (!other->get_dead() && other->get_tag() == "enemy_pod" && gameobject.get_sprite().getGlobalBounds().intersects(other->get_sprite().getGlobalBounds()))
 		{
 			// Handle collision
-			std::cout << "Collision" << "\n";
 			//gameobject.set_dead(true);
 		}
 	}
